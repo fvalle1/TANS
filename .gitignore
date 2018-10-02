@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+.idea
+*.dat
+*.root
+*.pcm
+cmake-build-debug/
