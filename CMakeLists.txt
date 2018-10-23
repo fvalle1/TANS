@@ -12,18 +12,39 @@ if (OPENMP_FOUND)
 endif()
 
 
+project(NeuralAnalyzer)
+
+##root
+list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
+find_package(ROOT REQUIRED COMPONENTS RIO Net)
+include(${ROOT_USE_FILE})
+
+ROOT_GENERATE_DICTIONARY(G__TRandomPlus TRandomPlus.h LINKDEF)
+add_library(TRandomPlus SHARED TRandomPlus.cxx G__TRandomPlus.cxx)
+target_link_libraries(TRandomPlus ${ROOT_LIBRARIES})
+
+ROOT_GENERATE_DICTIONARY(G__SimulatorConfiguration SimulatorConfiguration.h LINKDEF)
+add_library(SimulatorConfiguration SHARED SimulatorConfiguration.cxx G__SimulatorConfiguration.cxx)
+target_link_libraries(SimulatorConfiguration ${ROOT_LIBRARIES})
+
+ROOT_GENERATE_DICTIONARY(G__Simulator Simulator.h LINKDEF)
+add_library(Simulator SHARED Simulator.cxx G__Simulator.cxx)
+target_link_libraries(Simulator TRandomPlus SimulatorConfiguration ${ROOT_LIBRARIES})
+
 include_directories(
         .
         ~/root/include
 )
 
 add_executable(tans
-        hist.cpp
-        io.cpp
-        compile.C
         main.cxx
-        hist_readfile.cxx
-        central.cpp
         StopWatch.cxx
-        bench.cxx
-        decay.cxx)
+        Simulator.cxx
+        SimulatorConfiguration.cxx
+        TRandomPlus.cxx)
+
+target_link_libraries(tans
+        Simulator
+        SimulatorConfiguration
+        TRandomPlus
+        )

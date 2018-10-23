@@ -9,12 +9,9 @@
 #include <Riostream.h>
 #include <TObject.h>
 #include <TF1.h>
+#include <TString.h>
 #include <functional>
 #endif
-
-
-typedef std::function<double(double*, double*)> TF1func;
-
 
 using namespace std;
 
@@ -22,9 +19,9 @@ class SimulatorConfiguration : public TObject {
 public:
     SimulatorConfiguration();
     SimulatorConfiguration(const SimulatorConfiguration &source);
-    SimulatorConfiguration(TF1 *ff, TF1 *ffbig, TF1* inv, double fxmin, double fxmax,
-                                     string descr, double **params, uint64_t hits = 100000,
-                                     uint32_t bins = 100);
+    SimulatorConfiguration(TF1 *ff, TF1 *ffbig, TF1 *inv, TF1 *imp, double impmax, double xmin,
+                               double xmax, TString descr, double **params, uint64_t hits = 1000000,
+                               uint32_t bins = 150, uint32_t seed = 42);
     virtual ~SimulatorConfiguration();
 
     friend ostream &operator<<(ostream &os, const SimulatorConfiguration &configuration);
@@ -34,13 +31,17 @@ public:
     TF1* ff;
     TF1* ffbig;
     TF1* finv;
+    TF1* fimp;
+
     double fxmin;
     double fxmax;
+    double fimpbig;
     uint64_t fNhits;
     uint32_t fNbins;
-    string fDescription;
+    uint32_t fSeed;
+    TString fDescription;
 
-    ClassDef(SimulatorConfiguration, 1)
+    ClassDef(SimulatorConfiguration, 4)
 };
 
 

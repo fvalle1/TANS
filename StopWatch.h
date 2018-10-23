@@ -10,10 +10,17 @@
 
 class StopWatch {
 public:
-    inline StopWatch(){fTime = std::chrono::system_clock::now();};
-    inline ~StopWatch(){std::cout<<"time: "<<std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - fTime).count()/1000.<<std::endl;}
+    inline StopWatch(){
+        fSystemTime = std::chrono::system_clock::now();
+        fCPUTime = std::clock();
+    };
+    inline ~StopWatch(){
+        std::cout<<"\nRunned in: "<<std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - fSystemTime).count()/1000.<<" sec [Wall time]"<<std::endl;
+        std::cout<<"Runned in: "<<(std::clock() - fCPUTime) / (double)CLOCKS_PER_SEC<<" sec [CPU time]"<<std::endl;
+    }
 private:
-    std::chrono::time_point<std::chrono::system_clock> fTime;
+    std::chrono::time_point<std::chrono::system_clock> fSystemTime;
+    std::clock_t fCPUTime;
 };
 
 

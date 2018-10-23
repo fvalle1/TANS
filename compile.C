@@ -1,11 +1,17 @@
 #include "TSystem.h"
+#include "TString.h"
 
-int compile(){
-    gSystem->CompileMacro("io.cpp", "kO");
-    gSystem->CompileMacro("hist.cpp", "kO");
-    gSystem->CompileMacro("hist_readfile.cxx", "kO");
-    gSystem->CompileMacro("central.cpp", "kO");
-    gSystem->CompileMacro("decay.cxx", "kO");
-
+int compile(TString myopt = "fast"){
+    TString opt;
+    if(myopt.Contains("force")) {
+        opt = "kfg";
+    }else{
+        opt = "kg0";
+    }
+    gSystem->CompileMacro("StopWatch.cxx", opt.Data());
+    gSystem->CompileMacro("TRandomPlus.cxx", opt.Data());
+    gSystem->CompileMacro("SimulatorConfiguration.cxx", opt.Data());
+    gSystem->CompileMacro("Simulator.cxx", opt.Data());
+    gSystem->CompileMacro("randomF.cxx", opt.Data());
     return 0;
 }
