@@ -28,23 +28,53 @@ add_library(SimulatorConfiguration SHARED SimulatorConfiguration.cxx G__Simulato
 target_link_libraries(SimulatorConfiguration ${ROOT_LIBRARIES})
 
 ROOT_GENERATE_DICTIONARY(G__Simulator Simulator.h LINKDEF)
-add_library(Simulator SHARED Simulator.cxx G__Simulator.cxx)
+add_library(Simulator SHARED Simulator.cxx G__Simulator.cxx metropolis.cxx)
 target_link_libraries(Simulator TRandomPlus SimulatorConfiguration ${ROOT_LIBRARIES})
+
+ROOT_GENERATE_DICTIONARY(G__chisquareomp chisquareomp.h LINKDEF)
+add_library(chisquareomp SHARED chisquareomp.cxx G__chisquareomp.cxx chisquareomp.cxx)
+target_link_libraries(chisquareomp ${ROOT_LIBRARIES})
 
 include_directories(
         .
         ~/root/include
+        ~/anaconda3/include
 )
+
+link_directories(/Users/filippo/anaconda3/lib)
 
 add_executable(tans
         main.cxx
         StopWatch.cxx
+        TelegramWatch.cxx
         Simulator.cxx
         SimulatorConfiguration.cxx
-        TRandomPlus.cxx)
+        TRandomPlus.cxx
+        )
 
 target_link_libraries(tans
         Simulator
         SimulatorConfiguration
         TRandomPlus
+        curl
         )
+
+add_executable(various
+        sphere.cxx
+        chisquare.cxx
+        chimain.cxx
+        compile.C
+        randomF.cxx
+        tree.cxx
+        )
+
+add_executable(
+        chi
+        StopWatch.cxx
+        chisquareomp.cxx
+)
+
+target_link_libraries(
+        chi
+        chisquareomp
+)
