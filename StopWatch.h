@@ -1,9 +1,12 @@
 //
 // Created by Filippo Valle on 03/10/2018.
 //
+//
+// Created by Filippo Valle on 03/10/2018.
+//
 
-#ifndef TANS_STOPWATCH_H
-#define TANS_STOPWATCH_H
+#ifndef STOPWATCH_H
+#define STOPWATCH_H
 
 #if !defined(__CINT__) || defined(__MAKECINT__)
 #include <iostream>
@@ -47,4 +50,4 @@ private:
 };
 
 
-#endif //TANS_STOPWATCH_H
+#endif //STOPWATCH_H

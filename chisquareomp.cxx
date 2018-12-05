@@ -8,7 +8,7 @@ double background(double x){
     return 0.1690*(10-0.01*x)*1000;
 }
 
-void chisquare(uint64_t Nexperiments = 100000){
+void chisquare(uint64_t Nexperiments = 90000000){
     StopWatch stopwatch;
     //gStyle->SetOptStat(00000000);
     printf("\nInitializing with thread %u", omp_get_thread_num());
